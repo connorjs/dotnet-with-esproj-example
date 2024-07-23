@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs", "libs\hello-cs\hello-cs.csproj", "{CA70F551-74BE-49DB-B5CC-D64C0D321478}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.github\workflows\pipeline.yaml = .github\workflows\pipeline.yaml
+		ci-build.ps1 = ci-build.ps1
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		LICENSE = LICENSE
+		README.md = README.md
+		sonar-project.properties = sonar-project.properties
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs-test", "libs\hello-cs-test\hello-cs-test.csproj", "{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA70F551-74BE-49DB-B5CC-D64C0D321478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA70F551-74BE-49DB-B5CC-D64C0D321478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA70F551-74BE-49DB-B5CC-D64C0D321478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA70F551-74BE-49DB-B5CC-D64C0D321478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA70F551-74BE-49DB-B5CC-D64C0D321478} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
+		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
+	EndGlobalSection
+EndGlobal

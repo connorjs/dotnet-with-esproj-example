@@ -1,0 +1,47 @@
+<Project>
+	<!-- MSBuild properties (general) -->
+	<!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-properties -->
+	<PropertyGroup>
+		<!-- Artifacts -->
+		<UseArtifactsOutput>true</UseArtifactsOutput>
+	</PropertyGroup>
+
+	<!-- MSBuild properties (for .NET) -->
+	<!-- https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props -->
+	<PropertyGroup>
+		<!-- Framework properties -->
+		<TargetFramework>net8.0</TargetFramework>
+
+		<!-- Publish related -->
+		<IsPublishable>false</IsPublishable> <!-- Private -->
+
+		<!-- Reference -->
+		<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences> <!-- Prefer explicit dependencies -->
+
+		<!-- Code generation -->
+		<ImplicitUsings>disable</ImplicitUsings> <!-- Prefer explicit usings -->
+	</PropertyGroup>
+
+	<!-- C# compiler options -->
+	<!-- https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/ -->
+	<PropertyGroup>
+		<!-- Language -->
+		<Nullable>enable</Nullable>
+
+		<!-- Code generation -->
+		<Deterministic>true</Deterministic>
+	</PropertyGroup>
+
+	<!-- Unit test coverage -->
+	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
+		<!-- Recommended to disable if no C++ native code. -->
+		<EnableStaticNativeInstrumentation>False</EnableStaticNativeInstrumentation>
+		<EnableDynamicNativeInstrumentation>False</EnableDynamicNativeInstrumentation>
+	</PropertyGroup>
+
+	<!-- Unit test usings -->
+	<ItemGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
+		<Using Include="FluentAssertions" />
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
+</Project>

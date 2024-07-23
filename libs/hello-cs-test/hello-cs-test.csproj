@@ -1,0 +1,13 @@
+<Project Sdk="MSTest.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Connorjs.DotNetWithEsprojExample.Hello</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="FluentAssertions" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\hello-cs\hello-cs.csproj" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,16 @@
+## Solution ##
+
+# Build
+artifacts/
+dist/
+node_modules/
+
+# Test
+coverage/
+TestResults/
+
+## IDE ##
+
+# Rider/JetBrains
+.idea/
+*.user
