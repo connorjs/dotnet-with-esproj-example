@@ -1,0 +1,10 @@
+{
+	"msbuild-sdks": {
+		"MSTest.Sdk": "3.5.0",
+		"Microsoft.VisualStudio.JavaScript.SDK": "1.0.979102"
+	},
+	"sdk": {
+		"rollForward": "latestFeature",
+		"version": "8.0.300"
+	}
+}
