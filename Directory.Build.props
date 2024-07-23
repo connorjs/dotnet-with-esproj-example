@@ -1,4 +1,8 @@
 <Project>
+	<PropertyGroup Condition="'$(CI)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
 	<!-- MSBuild properties (general) -->
 	<!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-properties -->
 	<PropertyGroup>
@@ -16,7 +20,7 @@
 		<IsPublishable>false</IsPublishable> <!-- Private -->
 
 		<!-- Reference -->
-		<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences> <!-- Prefer explicit dependencies -->
+		<!--		<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences> &lt;!&ndash; Prefer explicit dependencies &ndash;&gt;-->
 
 		<!-- Code generation -->
 		<ImplicitUsings>disable</ImplicitUsings> <!-- Prefer explicit usings -->
@@ -32,11 +36,13 @@
 		<Deterministic>true</Deterministic>
 	</PropertyGroup>
 
-	<!-- Unit test coverage -->
+	<!-- Unit test properties -->
 	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
-		<!-- Recommended to disable if no C++ native code. -->
-		<EnableStaticNativeInstrumentation>False</EnableStaticNativeInstrumentation>
-		<EnableDynamicNativeInstrumentation>False</EnableDynamicNativeInstrumentation>
+		<!-- Only provide TRX command line arguments in CI -->
+		<TrxTestCommandLineArguments />
+		<TrxTestCommandLineArguments Condition="'$(CI)' == 'true'">--report-trx --report-trx-filename $(MSBuildProjectName).trx</TrxTestCommandLineArguments>
+
+		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(MSBuildThisFileDirectory)coverage.runsettings --results-directory $(MSBuildThisFileDirectory)coverage $(TrxTestCommandLineArguments)</TestingPlatformCommandLineArguments>
 	</PropertyGroup>
 
 	<!-- Unit test usings -->

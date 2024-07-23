@@ -16,7 +16,7 @@ indent_style = tab
 # CSharpier default is 100
 max_line_length = 100
 
-[*.{csproj,esproj,props}]
+[*.{csproj,esproj,props,runsettings}]
 # Increase line length given .NET XML is whitespace sensitive
 max_line_length = 999
 

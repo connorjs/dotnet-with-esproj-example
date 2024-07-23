@@ -14,10 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{7592EEA2-3
 		ci-build.ps1 = ci-build.ps1
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
+		.config\dotnet-tools.json = .config\dotnet-tools.json
 		global.json = global.json
 		LICENSE = LICENSE
 		README.md = README.md
 		sonar-project.properties = sonar-project.properties
+		coverage.runsettings = coverage.runsettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"

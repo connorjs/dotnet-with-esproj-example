@@ -7,7 +7,7 @@ public class HelloUtilityTest
 	[DataRow(null, "Hello, world!")]
 	[DataRow("", "Hello, world!")]
 	[DataRow(" ", "Hello,  !")]
-	[DataRow("Nx", "Hello, Nx!")]
+	[DataRow("esproj", "Hello, esproj!")]
 	public void Hello(string? name, string expected)
 	{
 		HelloUtility.Hello(name).Should().Be(expected);
