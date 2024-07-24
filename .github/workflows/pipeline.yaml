@@ -10,6 +10,8 @@ jobs:
   Build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,9 +32,47 @@ jobs:
 
       - name: dotnet test
         run: dotnet test -c release --no-build
+
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
+        with:
+          reports: coverage/*.cobertura.xml
+          targetdir: coverage/report
+          reporttypes: Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub
+
+      - name: Check coverage thresholds
+        shell: pwsh
+        run: |
+          $coverage = Get-Content -Raw coverage/report/Summary.json | ConvertFrom-Json
+          if ($coverage.summary.linecoverage -lt 80 -or $coverage.summary.branchcoverage -lt 80 -or $coverage.summary.methodcoverage -lt 80) {
+            Write-Error "Coverage does not meet threshold.`n`nCI build failed."; Exit 1
+          }
       # End ci-build.ps1
 
+      - name: Add coverage comment to PR
+        if: github.event_name == 'pull_request' && always() # Still post coverage comment if tests failed
+        run: gh pr comment $PR_NUMBER --body-file coverage/report/SummaryGithub.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.number }}
+
+      - name: Publish coverage in build summary
+        if: always() # Still publish coverage if tests failed
+        run: cat coverage/report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage report to Codecov
+        if: always() # Still upload to CodeCov if tests failed
+        uses: codecov/codecov-action@v4
+        with:
+          disable_search: true
+          fail_ci_if_error: true
+          files: coverage/report/Cobertura.xml
+          flags: unittests
+          plugins: noop
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: SonarCloud Scan
+        if: always() # Still run Sonar if tests failed
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any

@@ -1,4 +1,8 @@
 <Project>
+	<PropertyGroup Condition="'$(CI)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
 	<!-- MSBuild properties (general) -->
 	<!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-properties -->
 	<PropertyGroup>
@@ -32,11 +36,9 @@
 		<Deterministic>true</Deterministic>
 	</PropertyGroup>
 
-	<!-- Unit test coverage -->
+	<!-- Unit test properties -->
 	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
-		<!-- Recommended to disable if no C++ native code. -->
-		<EnableStaticNativeInstrumentation>False</EnableStaticNativeInstrumentation>
-		<EnableDynamicNativeInstrumentation>False</EnableDynamicNativeInstrumentation>
+		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(MSBuildThisFileDirectory)coverage.runsettings --results-directory $(MSBuildThisFileDirectory)coverage</TestingPlatformCommandLineArguments>
 	</PropertyGroup>
 
 	<!-- Unit test usings -->
