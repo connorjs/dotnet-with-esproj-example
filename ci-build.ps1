@@ -23,5 +23,5 @@ if ($coverage.summary.linecoverage -lt 80 -or $coverage.summary.branchcoverage -
 	Write-Color red "Coverage does not meet threshold.`n`nCI build failed."; Exit 1
 }
 
-# Print success (in green)
+# Print success
 Write-Color green "CI build succeeded."
