@@ -1,0 +1,22 @@
+<Project TreatAsLocalProperty="StartTicks;FinishTicks;ElapsedTicks;Elapsed">
+
+	<!-- Hook into the JSPS restore before the standard NPMRestore -->
+	<Target Name="PnpmRestore" AfterTargets="NPMRestore" Label="Restore npm packages" Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json" Outputs="$(WorkspaceRoot)pnpm-lock.yaml">
+		<!-- Run pnpm install, timing it to match C# output -->
+		<PropertyGroup>
+			<StartTicks>$([System.DateTime]::UtcNow.Ticks)</StartTicks>
+		</PropertyGroup>
+
+		<Exec Command="pnpm -w install" StandardOutputImportance="normal" />
+
+		<PropertyGroup>
+			<FinishTicks>$([System.DateTime]::UtcNow.Ticks)</FinishTicks>
+			<ElapsedTicks>$([MSBuild]::Subtract($(FinishTicks), $(StartTicks)))</ElapsedTicks>
+			<Elapsed>$([System.TimeSpan]::FromTicks($(ElapsedTicks)).Milliseconds)</Elapsed>
+		</PropertyGroup>
+
+		<!-- Print restore message the same way as csproj -->
+		<Message Text="Restored $(MSBuildProjectFullPath) (in $(Elapsed) ms)." Importance="high" />
+	</Target>
+
+</Project>

@@ -7,6 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{7592EEA2
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{B459F914-7484-4E8F-BEE8-B8464005B06C}"
+	ProjectSection(SolutionItems) = preProject
+		.node-version = .node-version
+		client\Directory.Build.props = client\Directory.Build.props
+		client\Directory.Build.targets = client\Directory.Build.targets
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{8CE9A197-C77E-40CB-B19E-97DC0AA5D36E}"
 	ProjectSection(SolutionItems) = preProject
 		coverage.runsettings = coverage.runsettings
@@ -25,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{161728
 		LICENSE = LICENSE
 		ci-build.ps1 = ci-build.ps1
 		.github\workflows\pipeline.yaml = .github\workflows\pipeline.yaml
+		package.json = package.json
+		pnpm-workspace.yaml = pnpm-workspace.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"
@@ -32,6 +41,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs", "server\hello-cs\hello-cs.csproj", "{CA70F551-74BE-49DB-B5CC-D64C0D321478}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs-test", "server\hello-cs-test\hello-cs-test.csproj", "{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "hello-js", "client\hello-js\hello-js.esproj", "{1EFD455E-783E-44B2-9FFA-18D456E7BE62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,11 +61,17 @@ Global
 		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFD455E-783E-44B2-9FFA-18D456E7BE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFD455E-783E-44B2-9FFA-18D456E7BE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFD455E-783E-44B2-9FFA-18D456E7BE62}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFD455E-783E-44B2-9FFA-18D456E7BE62}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CA70F551-74BE-49DB-B5CC-D64C0D321478} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
 		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
 		{8CE9A197-C77E-40CB-B19E-97DC0AA5D36E} = {7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}
 		{1617285C-95A0-4AF2-9C07-CE02BC254905} = {7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}
+		{B459F914-7484-4E8F-BEE8-B8464005B06C} = {7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}
+		{1EFD455E-783E-44B2-9FFA-18D456E7BE62} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
 	EndGlobalSection
 EndGlobal

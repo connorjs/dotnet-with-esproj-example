@@ -1,0 +1,9 @@
+{
+	"name": "@connorjs.dotnet-with-esproj-example/hello-js",
+	"private": true,
+	"type": "module",
+	"scripts": {
+	},
+	"devDependencies": {
+	}
+}

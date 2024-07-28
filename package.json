@@ -1,0 +1,12 @@
+{
+	"name": "@connorjs.dotnet-with-esproj-example/workspace",
+	"private": true,
+	"type": "module",
+	"scripts": {
+	},
+	"devDependencies": {
+	},
+	"pnpm": {
+		"requiredScripts": [ "build" ]
+	}
+}

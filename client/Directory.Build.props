@@ -1,0 +1,18 @@
+<Project>
+	<Import Project="$(MSBuildThisFileDirectory)../Workspace.props" />
+
+	<!-- .NET integration -->
+	<PropertyGroup>
+		<!-- Artifacts (needed different property for JSPS) -->
+		<BaseIntermediateOutputPath>$(WorkspaceRoot)artifacts/obj/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
+
+		<!-- esproj still needs a target framework -->
+		<TargetFramework>net8.0</TargetFramework>
+	</PropertyGroup>
+
+	<!-- Customize npm build -->
+	<PropertyGroup>
+		<!-- Skip npm install because we are using pnpm; see PnpmInstall in Directory.Build.targets -->
+		<ShouldRunNpmInstall>false</ShouldRunNpmInstall>
+	</PropertyGroup>
+</Project>

@@ -4,6 +4,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<!-- Add WorkspaceRoot and ProjectRoot for simpler naming. -->
 		<WorkspaceRoot>$(MSBuildThisFileDirectory)</WorkspaceRoot>
+		<ProjectRoot>$(MSBuildProjectDirectory)</ProjectRoot>
 	</PropertyGroup>
 </Project>
