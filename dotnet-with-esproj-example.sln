@@ -1,29 +1,37 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs", "libs\hello-cs\hello-cs.csproj", "{CA70F551-74BE-49DB-B5CC-D64C0D321478}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{8CE9A197-C77E-40CB-B19E-97DC0AA5D36E}"
+	ProjectSection(SolutionItems) = preProject
+		coverage.runsettings = coverage.runsettings
+		server\Directory.Build.props = server\Directory.Build.props
+		server\Directory.Packages.props = server\Directory.Packages.props
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{1617285C-95A0-4AF2-9C07-CE02BC254905}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.github\workflows\pipeline.yaml = .github\workflows\pipeline.yaml
-		ci-build.ps1 = ci-build.ps1
-		coverage.runsettings = coverage.runsettings
-		Directory.Build.props = Directory.Build.props
-		Directory.Packages.props = Directory.Packages.props
-		global.json = global.json
-		LICENSE = LICENSE
-		README.md = README.md
 		sonar-project.properties = sonar-project.properties
+		Workspace.props = Workspace.props
+		LICENSE = LICENSE
+		ci-build.ps1 = ci-build.ps1
+		.github\workflows\pipeline.yaml = .github\workflows\pipeline.yaml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs-test", "libs\hello-cs-test\hello-cs-test.csproj", "{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs", "server\hello-cs\hello-cs.csproj", "{CA70F551-74BE-49DB-B5CC-D64C0D321478}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello-cs-test", "server\hello-cs-test\hello-cs-test.csproj", "{2652DC61-0D21-423D-BF0E-FA67ED4A68F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,5 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CA70F551-74BE-49DB-B5CC-D64C0D321478} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
 		{2652DC61-0D21-423D-BF0E-FA67ED4A68F7} = {2E75741F-092F-4C2C-A182-AAF9F38CEC58}
+		{8CE9A197-C77E-40CB-B19E-97DC0AA5D36E} = {7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}
+		{1617285C-95A0-4AF2-9C07-CE02BC254905} = {7592EEA2-3C6C-4ED0-9EB7-5EC6DBB51DE5}
 	EndGlobalSection
 EndGlobal

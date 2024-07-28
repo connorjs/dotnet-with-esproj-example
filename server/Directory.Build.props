@@ -1,13 +1,11 @@
 <Project>
-	<PropertyGroup Condition="'$(CI)' == 'true'">
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-	</PropertyGroup>
+	<Import Project="$(MSBuildThisFileDirectory)../Workspace.props" />
 
 	<!-- MSBuild properties (general) -->
 	<!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-properties -->
 	<PropertyGroup>
 		<!-- Artifacts -->
-		<UseArtifactsOutput>true</UseArtifactsOutput>
+		<ArtifactsPath>$(WorkspaceRoot)artifacts</ArtifactsPath>
 	</PropertyGroup>
 
 	<!-- MSBuild properties (for .NET) -->
@@ -38,7 +36,7 @@
 
 	<!-- Unit test properties -->
 	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
-		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(MSBuildThisFileDirectory)coverage.runsettings --results-directory $(MSBuildThisFileDirectory)coverage</TestingPlatformCommandLineArguments>
+		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(WorkspaceRoot)coverage.runsettings --results-directory $(WorkspaceRoot)coverage</TestingPlatformCommandLineArguments>
 	</PropertyGroup>
 
 	<!-- Unit test usings -->

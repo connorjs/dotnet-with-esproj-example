@@ -1,0 +1,9 @@
+<Project>
+	<PropertyGroup Condition="'$(CI)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<WorkspaceRoot>$(MSBuildThisFileDirectory)</WorkspaceRoot>
+	</PropertyGroup>
+</Project>
