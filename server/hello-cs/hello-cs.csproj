@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <RootNamespace>Connorjs.DotNetWithEsprojExample.Hello</RootNamespace>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>Connorjs.DotNetWithEsprojExample.Hello</RootNamespace>
+	</PropertyGroup>
 </Project>

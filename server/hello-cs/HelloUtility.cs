@@ -1,5 +1,8 @@
-﻿namespace Connorjs.DotNetWithEsprojExample.Hello;
+namespace Connorjs.DotNetWithEsprojExample.Hello;
 
+/// <summary>
+/// Example “Hello, world!” class.
+/// </summary>
 public static class HelloUtility
 {
 	/// <summary>

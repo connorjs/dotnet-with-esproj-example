@@ -1,46 +1,30 @@
 <Project>
 	<Import Project="$(MSBuildThisFileDirectory)../Workspace.props" />
 
-	<!-- MSBuild properties (general) -->
-	<!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-properties -->
 	<PropertyGroup>
+		<!-- Configure test property (used by connorjs-analyzers and more) -->
+		<IsTestProject>$(MSBuildProjectName.EndsWith('test'))</IsTestProject>
+
 		<!-- Artifacts -->
 		<ArtifactsPath>$(WorkspaceRoot)artifacts</ArtifactsPath>
-	</PropertyGroup>
 
-	<!-- MSBuild properties (for .NET) -->
-	<!-- https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props -->
-	<PropertyGroup>
 		<!-- Framework properties -->
 		<TargetFramework>net8.0</TargetFramework>
 
 		<!-- Publish related -->
 		<IsPublishable>false</IsPublishable> <!-- Private -->
-
-		<!-- Reference -->
-		<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences> <!-- Prefer explicit dependencies -->
-
-		<!-- Code generation -->
-		<ImplicitUsings>disable</ImplicitUsings> <!-- Prefer explicit usings -->
 	</PropertyGroup>
 
-	<!-- C# compiler options -->
-	<!-- https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/ -->
-	<PropertyGroup>
-		<!-- Language -->
-		<Nullable>enable</Nullable>
-
-		<!-- Code generation -->
-		<Deterministic>true</Deterministic>
-	</PropertyGroup>
-
-	<!-- Unit test properties -->
-	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
+	<PropertyGroup Condition="$(IsTestProject)">
+		<!-- Coverage arguments -->
 		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(WorkspaceRoot)coverage.runsettings --results-directory $(WorkspaceRoot)coverage</TestingPlatformCommandLineArguments>
 	</PropertyGroup>
 
-	<!-- Unit test usings -->
-	<ItemGroup Condition="$(MSBuildProjectName.EndsWith('test'))">
+	<ItemGroup Condition="$(IsTestProject)">
+		<!-- Allow internal for unit tests -->
+		<AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.DiscoverInternalsAttribute" />
+
+		<!-- Usings -->
 		<Using Include="FluentAssertions" />
 		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
 	</ItemGroup>
