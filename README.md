@@ -14,3 +14,15 @@ Most other configuration files live in the root directory.
 The solution view offers an alternative display of the workspace.
 It reorganizes the root configuration files into `client`, `server`, and `shared` under the `files` solution folder.
 It groups all projects together under the `projects` solution folder (no `client` and `server` separation).
+
+## Targets
+
+The workspace uses the standard `dotnet` targets for both .NET and npm.
+
+- `restore` installs dependencies
+- `build` compiles, lints, and builds the projects
+- `test` runs unit tests with coverage
+
+.NET uses `build` for Analyzers and formatting (via `CSharpier.MSBuild`), so npm uses `build` for ESLint, tsc, and Prettier.
+
+`dotnet format` exists to help auto-fix, but is not used to verify the build.

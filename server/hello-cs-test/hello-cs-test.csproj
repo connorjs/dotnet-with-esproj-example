@@ -8,6 +8,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\hello-cs\hello-cs.csproj" />
+		<ProjectReference Include="../hello-cs/hello-cs.csproj" />
 	</ItemGroup>
 </Project>
