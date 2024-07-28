@@ -1,0 +1,7 @@
+{
+	"extends": "@connorjs/tsconfig/base/tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"outDir": "../../artifacts/tsc/hello-js"
+	}
+}

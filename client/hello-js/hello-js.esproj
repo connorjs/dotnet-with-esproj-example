@@ -1,2 +1,5 @@
 <Project Sdk="Microsoft.VisualStudio.JavaScript.SDK">
+	<ItemGroup>
+		<Script Include="tsconfig.json" />
+	</ItemGroup>
 </Project>

@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{B459F9
 		.node-version = .node-version
 		client\Directory.Build.props = client\Directory.Build.props
 		client\Directory.Build.targets = client\Directory.Build.targets
+		package.json = package.json
+		pnpm-workspace.yaml = pnpm-workspace.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{8CE9A197-C77E-40CB-B19E-97DC0AA5D36E}"
@@ -32,8 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{161728
 		LICENSE = LICENSE
 		ci-build.ps1 = ci-build.ps1
 		.github\workflows\pipeline.yaml = .github\workflows\pipeline.yaml
-		package.json = package.json
-		pnpm-workspace.yaml = pnpm-workspace.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"

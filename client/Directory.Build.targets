@@ -1,5 +1,17 @@
 <Project TreatAsLocalProperty="StartTicks;FinishTicks;ElapsedTicks;Elapsed">
 
+	<!-- Build: tsc -->
+	<Target Name="Tsc" AfterTargets="Build" Label="tsc">
+		<Message Text="Hello, tsc" Importance="high" />
+	</Target>
+
+	<!-- Format: eslint -->
+
+	<!-- Format: prettier -->
+
+	<!-- Test: vitest -->
+
+	<!-- Restore: install -->
 	<!-- Hook into the JSPS restore before the standard NPMRestore -->
 	<Target Name="PnpmRestore" AfterTargets="NPMRestore" Label="Restore npm packages" Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json" Outputs="$(WorkspaceRoot)pnpm-lock.yaml">
 		<!-- Run pnpm install, timing it to match C# output -->

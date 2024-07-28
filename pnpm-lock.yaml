@@ -6,6 +6,36 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@connorjs/tsconfig':
+        specifier: ~0.2.0
+        version: 0.2.0(typescript@5.5.4)
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
 
   client/hello-js: {}
+
+packages:
+
+  '@connorjs/tsconfig@0.2.0':
+    resolution: {integrity: sha512-QEFm1THinWtfboSvekxele34nT5l/xmTEtXhomUyUydr6keRx90nATBHTIQc2KNP4ff6E3I7px+IszkD3S/iZw==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+snapshots:
+
+  '@connorjs/tsconfig@0.2.0(typescript@5.5.4)':
+    optionalDependencies:
+      typescript: 5.5.4
+
+  typescript@5.5.4: {}
