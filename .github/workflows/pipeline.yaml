@@ -54,8 +54,8 @@ jobs:
             -d:sonar.host.url='https://sonarcloud.io' \
             -d:sonar.sources='client/,server/' \
             -d:sonar.tests='client/,server/' \
-            -d:sonar.test.inclusions='**/*-test/**/*.cs,**/*.test.*' \
-            -d:sonar.exclusions='**/*-test/**/*.cs,**/*.test.*,**/*.json,**/*.props' \
+            -d:sonar.test.inclusions='**/*-test/**/*.cs,**/*.test.ts' \
+            -d:sonar.exclusions='**/*.json,**/*.props' \
             -d:sonar.coverageReportPaths='TestResults/report/SonarQube.xml' \
             -k:connorjs_dotnet-with-esproj-example -o:connorjs
 
