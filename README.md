@@ -26,3 +26,13 @@ The workspace uses the standard `dotnet` targets for both .NET and npm.
 .NET uses `build` for Analyzers and formatting (via `CSharpier.MSBuild`), so npm uses `build` for ESLint, tsc, and Prettier.
 
 `dotnet format` exists to help auto-fix, but is not used to verify the build.
+
+## Notes
+
+### Path separators
+
+Per my understanding, Windows happily accepts `/` for path separators.
+Unix requires `/`.
+
+Thus, this workspace uses `/` in all configuration files except the `*.sln` file which uses `\`.
+This preserves the IDE edits made to the `*.sln` file.

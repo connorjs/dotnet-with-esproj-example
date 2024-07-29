@@ -1,3 +1,9 @@
+param(
+	[Alias('v')]
+	# Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+	[string]$verbosity = "minimal"
+)
+
 # Install reportgenerator if not present
 if (-not (Get-Command reportgenerator -ErrorAction SilentlyContinue)) {
 	dotnet tool install --global dotnet-reportgenerator-globaltool
@@ -8,17 +14,21 @@ function Write-Color($color) {
 }
 
 # Clean coverage directory
-Remove-Item -Recurse -Force coverage -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force TestResults -ErrorAction SilentlyContinue
 
 # Run the build
-dotnet restore
-dotnet build -c release --no-restore
-dotnet test -c release --no-build
-reportgenerator -reports:"coverage/*.cobertura.xml" -targetdir:coverage/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub" -verbosity:Warning
+dotnet restore --verbosity $verbosity
+dotnet build --verbosity $verbosity --configuration Release --no-restore
+dotnet test --verbosity $verbosity --configuration Release --no-build
+Get-ChildItem TestResults -Filter *.cobertura.xml -Name | Foreach-Object {
+   $projectName = $_ -replace ".{14}$"
+	(Get-Content TestResults/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content TestResults/$_
+}
+reportgenerator -reports:"TestResults/*.cobertura.xml" -targetdir:TestResults/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub;SonarQube" -verbosity:Warning
 
 # Output coverage information
-$coverage = Get-Content -Raw coverage/report/Summary.json | ConvertFrom-Json
-$coverage.summary | Format-Table @{ L = 'Line'; E = { "$($_.linecoverage.toString() )%" }; A = 'center' }, @{ L = 'Branch'; E = { "$( $_.branchcoverage )%" }; A = 'center' }, @{ L = 'Method'; E = { "$( $_.methodcoverage )%" }; A = 'center' }
+$coverage = Get-Content -Raw TestResults/report/Summary.json | ConvertFrom-Json
+$coverage.coverage.assemblies | Format-Table @{ L = ' Project '; E = { "$($_.name)" }; A = 'center' }, @{ L = ' Line '; E = { "$($_.coverage.toString() )%" }; A = 'center' }, @{ L = ' Branch '; E = { "$( $_.branchcoverage )%" }; A = 'center' }, @{ L = ' Method '; E = { "$( $_.methodcoverage )%" }; A = 'center' }
 if ($coverage.summary.linecoverage -lt 80 -or $coverage.summary.branchcoverage -lt 80 -or $coverage.summary.methodcoverage -lt 80) {
 	Write-Color red "Coverage does not meet threshold.`n`nCI build failed."; Exit 1
 }

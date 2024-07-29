@@ -1,0 +1,75 @@
+<Project TreatAsLocalProperty="StartTicks;FinishTicks;ElapsedTicks;Elapsed">
+	<!-- Release build command arguments (verify, used in CI) -->
+	<PropertyGroup>
+		<PrettierArgs>--check</PrettierArgs>
+	</PropertyGroup>
+
+	<!-- Debug build command arguments (auto-fix, used in local dev) -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<EslintArgs>$(EslintArgs) --fix</EslintArgs>
+		<PrettierArgs>$(PrettierArgs) --write</PrettierArgs>
+	</PropertyGroup>
+
+	<!-- Build: eslint -->
+	<Target Name="eslint" AfterTargets="Build">
+		<Exec
+			Command="pnpm exec eslint --format pretty . $(EslintArgs)"
+			StandardOutputImportance="normal"
+		/>
+	</Target>
+
+	<!-- Build: prettier -->
+	<Target Name="prettier" AfterTargets="Build">
+		<Exec
+			Command="pnpm exec prettier . $(PrettierArgs)"
+			StandardOutputImportance="normal"
+		/>
+	</Target>
+
+	<!-- Build: tsc -->
+	<Target Name="tsc" AfterTargets="Build">
+		<Exec
+			Command="pnpm exec tsc --build"
+			StandardOutputImportance="normal"
+		/>
+		<!-- Print from tsc, similar to C# compile, for CLI consistency -->
+		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
+	</Target>
+
+	<!-- Test: vitest -->
+	<Target Name="vitest" AfterTargets="VSTest"
+			Inputs="$([MSBuild]::GetPathOfFileAbove('vitest.config.js'));@(ProjectFiles)"
+			Outputs="$(WorkspaceRoot)TestResults/$(ProjectName).cobertura.xml"
+	>
+		<!-- Add output similar to .NET VSTest -->
+		<Message Text="Run tests: '$(ProjectRoot)' [vitest]" Importance="high" />
+		<Exec
+			Command="pnpm exec vitest run --coverage"
+			StandardOutputImportance="normal"
+		/>
+		<Message Text="Tests succeeded: '$(ProjectRoot)' [vitest]" Importance="high" />
+	</Target>
+
+	<!-- Restore: install -->
+	<!-- Hook into the JSPS restore before the standard NPMRestore -->
+	<Target Name="pnpm install" AfterTargets="NPMRestore"
+			Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json"
+			Outputs="$(WorkspaceRoot)pnpm-lock.yaml"
+	>
+		<!-- Run pnpm install, timing it to match C# output -->
+		<PropertyGroup>
+			<StartTicks>$([System.DateTime]::UtcNow.Ticks)</StartTicks>
+		</PropertyGroup>
+
+		<Exec Command="pnpm -w install" StandardOutputImportance="normal" />
+
+		<PropertyGroup>
+			<FinishTicks>$([System.DateTime]::UtcNow.Ticks)</FinishTicks>
+			<ElapsedTicks>$([MSBuild]::Subtract($(FinishTicks), $(StartTicks)))</ElapsedTicks>
+			<Elapsed>$([System.TimeSpan]::FromTicks($(ElapsedTicks)).Milliseconds)</Elapsed>
+		</PropertyGroup>
+
+		<!-- Print restore message the same way as csproj -->
+		<Message Text="Restored $(MSBuildProjectFullPath) (in $(Elapsed) ms)." Importance="high" />
+	</Target>
+</Project>

@@ -1,5 +1,6 @@
 {
 	"msbuild-sdks": {
+		"Microsoft.VisualStudio.JavaScript.SDK": "1.0.1364779",
 		"MSTest.Sdk": "3.5.0"
 	},
 	"sdk": {
