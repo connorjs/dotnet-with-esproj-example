@@ -34,12 +34,27 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
 
-      # Begin ci-build.ps1
+      - name: Use Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install SonarQube scanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      # Begin ci-build.ps1 (with modification in build for Sonar)
       - name: dotnet restore
         run: dotnet restore -v normal
 
       - name: dotnet build
-        run: dotnet build -v normal -c Release --no-restore
+        run: |
+          dotnet sonarscanner begin -k:connorjs_dotnet-with-esproj-example -d:sonar.token='${{ secrets.SONAR_TOKEN }}' -d:sonar.host.url=https://sonarcloud.io
+          dotnet build -v normal -c Release --no-restore
+          dotnet sonarscanner end -d:sonar.token='${{ secrets.SONAR_TOKEN }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: dotnet test
         run: dotnet test -v normal -c Release --no-build
@@ -53,7 +68,7 @@ jobs:
           }
 
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
+        uses: danielpalme/ReportGenerator-GitHub-Action@5
         with:
           reports: TestResults/*.cobertura.xml
           targetdir: TestResults/report
@@ -89,10 +104,3 @@ jobs:
           flags: unittests
           plugins: noop
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: SonarCloud Scan
-        if: always() # Still run Sonar if tests failed
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
