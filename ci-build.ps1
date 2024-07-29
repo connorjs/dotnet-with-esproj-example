@@ -24,7 +24,7 @@ Get-ChildItem TestResults -Filter *.cobertura.xml -Name | Foreach-Object {
    $projectName = $_ -replace ".{14}$"
 	(Get-Content TestResults/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content TestResults/$_
 }
-reportgenerator -reports:"TestResults/*.cobertura.xml" -targetdir:TestResults/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub" -verbosity:Warning
+reportgenerator -reports:"TestResults/*.cobertura.xml" -targetdir:TestResults/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub;SonarQube" -verbosity:Warning
 
 # Output coverage information
 $coverage = Get-Content -Raw TestResults/report/Summary.json | ConvertFrom-Json

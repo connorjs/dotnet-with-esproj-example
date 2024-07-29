@@ -44,12 +44,20 @@ jobs:
       - name: dotnet test
         run: dotnet test -v normal -c Release --no-build
 
+      - name: Fix JS package names
+        shell: pwsh
+        run: |
+          Get-ChildItem TestResults -Filter *.cobertura.xml -Name | Foreach-Object {
+            $projectName = $_ -replace ".{14}$"
+            (Get-Content TestResults/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content TestResults/$_
+          }
+
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
         with:
           reports: TestResults/*.cobertura.xml
           targetdir: TestResults/report
-          reporttypes: Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub
+          reporttypes: Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub;SonarQube
 
       - name: Check coverage thresholds
         shell: pwsh
