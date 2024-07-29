@@ -12,7 +12,7 @@
 
 	<!-- Build: eslint -->
 	<Target Name="eslint" AfterTargets="Build">
-		<Message Text="Hello, eslint $(EslintArgs)" Importance="high" />
+		<Exec Command="pnpm exec eslint --format pretty $(ProjectRootRelative) $(EslintArgs)" WorkingDirectory="$(WorkspaceRoot)" />
 	</Target>
 
 	<!-- Build: prettier -->

@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{B459F9
 		package.json = package.json
 		pnpm-lock.yaml = pnpm-lock.yaml
 		pnpm-workspace.yaml = pnpm-workspace.yaml
+		eslint.config.js = eslint.config.js
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{8CE9A197-C77E-40CB-B19E-97DC0AA5D36E}"
