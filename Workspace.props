@@ -8,5 +8,6 @@
 		<WorkspaceRoot>$(MSBuildThisFileDirectory)</WorkspaceRoot>
 		<ProjectRoot>$(MSBuildProjectDirectory)</ProjectRoot>
 		<ProjectRootRelative>$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory), $(MSBuildProjectDirectory)))</ProjectRootRelative>
+		<ProjectName>$(MSBuildProjectName)</ProjectName>
 	</PropertyGroup>
 </Project>

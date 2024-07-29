@@ -17,15 +17,20 @@
 
 	<!-- Build: prettier -->
 	<Target Name="prettier" AfterTargets="Build">
-		<Exec Command="pnpm exec prettier $(ProjectRootRelative) $(PrettierArgs)" WorkingDirectory="$(WorkspaceRoot)" />
+		<Exec Command="pnpm exec prettier $(ProjectRootRelative) $(PrettierArgs)" StandardOutputImportance="Normal" WorkingDirectory="$(WorkspaceRoot)" />
 	</Target>
 
 	<!-- Build: tsc -->
-	<Target Name="tsc" BeforeTargets="Build">
+	<Target Name="tsc" AfterTargets="Build">
 		<Exec Command="pnpm exec tsc --build $(ProjectRootRelative)" WorkingDirectory="$(WorkspaceRoot)" />
+		<!-- Print from tsc, similar to C# compile, for CLI consistency -->
+		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
 	</Target>
 
-	<!-- Test: vitest -->
+	<!--	&lt;!&ndash; Test: vitest &ndash;&gt;-->
+	<!--	<Target Name="vitest" AfterTargets="Test">-->
+	<!--		<Exec Command="echo hello" />-->
+	<!--	</Target>-->
 
 	<!-- Restore: install -->
 	<!-- Hook into the JSPS restore before the standard NPMRestore -->

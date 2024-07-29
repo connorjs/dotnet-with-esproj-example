@@ -8,11 +8,14 @@
 
 		<!-- esproj still needs a target framework -->
 		<TargetFramework>net8.0</TargetFramework>
+
+		<!-- Mark all projects as test projects so that `dotnet test` will run its tests -->
+		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
 
 	<!-- Customize npm build -->
 	<PropertyGroup>
-		<!-- Skip npm install because we are using pnpm; see PnpmInstall in Directory.Build.targets -->
+		<!-- Skip npm install because we are using pnpm; see Directory.Build.targets -->
 		<ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 	</PropertyGroup>
 </Project>
