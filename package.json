@@ -2,7 +2,6 @@
 	"name": "@connorjs.dotnet-with-esproj-example/workspace",
 	"private": true,
 	"type": "module",
-	"scripts": {},
 	"devDependencies": {
 		"@connorjs/tsconfig": "~0.2.0",
 		"@vitest/coverage-v8": "^2.0.4",
