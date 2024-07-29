@@ -43,26 +43,25 @@ jobs:
       - name: Install SonarQube scanner
         run: dotnet tool install --global dotnet-sonarscanner
 
-      # Begin ci-build.ps1 (with modification in build for Sonar)
+      - name: sonarscanner begin
+        run: >-
+          dotnet sonarscanner begin
+          -d:sonar.token='${{ secrets.SONAR_TOKEN }}'
+          -d:sonar.host.url='https://sonarcloud.io'
+          -d:sonar.test.inclusions='**/*-test/**/*.cs,**/*.test.ts'
+          -d:sonar.exclusions='**/*.json,**/*.props'
+          -d:sonar.coverageReportPaths='TestResults/report/SonarQube.xml'
+          -k:connorjs_dotnet-with-esproj-example -o:connorjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Begin ci-build.ps1
       - name: dotnet restore
         run: dotnet restore -v normal
 
       - name: dotnet build
-        run: |
-          dotnet sonarscanner begin \
-            -d:sonar.token='${{ secrets.SONAR_TOKEN }}' \
-            -d:sonar.host.url='https://sonarcloud.io' \
-            -d:sonar.test.inclusions='**/*-test/**/*.cs,**/*.test.ts' \
-            -d:sonar.exclusions='**/*.json,**/*.props' \
-            -d:sonar.coverageReportPaths='TestResults/report/SonarQube.xml' \
-            -k:connorjs_dotnet-with-esproj-example -o:connorjs
-
-          dotnet build -v normal -c Release --no-restore
-
-          dotnet sonarscanner end -d:sonar.token='${{ secrets.SONAR_TOKEN }}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet build -v normal -c Release --no-restore
 
       - name: dotnet test
         run: dotnet test -v normal -c Release --no-build
@@ -90,6 +89,13 @@ jobs:
             Write-Error "Coverage does not meet threshold.`n`nCI build failed."; Exit 1
           }
       # End ci-build.ps1
+
+      - name: sonarscanner end
+        if: always() # Still publish Sonar if tests failed
+        run: dotnet sonarscanner end -d:sonar.token='${{ secrets.SONAR_TOKEN }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Publish coverage in build summary
         if: always() # Still publish coverage if tests failed
