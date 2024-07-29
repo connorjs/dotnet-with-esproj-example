@@ -36,13 +36,13 @@ jobs:
 
       # Begin ci-build.ps1
       - name: dotnet restore
-        run: dotnet restore
+        run: dotnet restore -v normal
 
       - name: dotnet build
-        run: dotnet build -c release --no-restore
+        run: dotnet build -v normal -c Release --no-restore
 
       - name: dotnet test
-        run: dotnet test -c release --no-build
+        run: dotnet test -v normal -c Release --no-build
 
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
