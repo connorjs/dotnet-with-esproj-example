@@ -49,8 +49,18 @@ jobs:
 
       - name: dotnet build
         run: |
-          dotnet sonarscanner begin -k:connorjs_dotnet-with-esproj-example -o:connorjs -d:sonar.token='${{ secrets.SONAR_TOKEN }}' -d:sonar.host.url='https://sonarcloud.io'
+          dotnet sonarscanner begin \
+            -d:sonar.token='${{ secrets.SONAR_TOKEN }}' \
+            -d:sonar.host.url='https://sonarcloud.io' \
+            -d:sonar.sources='client/,server/' \
+            -d:sonar.tests='client/,server/' \
+            -d:sonar.test.inclusions='**/*-test/**/*.cs,**/*.test.*' \
+            -d:sonar.exclusions='**/*-test/**/*.cs,**/*.test.*,**/*.json,**/*.props' \
+            -d:sonar.coverageReportPaths='TestResults/report/SonarQube.xml' \
+            -k:connorjs_dotnet-with-esproj-example -o:connorjs
+
           dotnet build -v normal -c Release --no-restore
+
           dotnet sonarscanner end -d:sonar.token='${{ secrets.SONAR_TOKEN }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
