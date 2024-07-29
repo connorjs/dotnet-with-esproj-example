@@ -39,7 +39,7 @@
 	<!-- Test: vitest -->
 	<Target Name="vitest" AfterTargets="VSTest"
 			Inputs="$([MSBuild]::GetPathOfFileAbove('vitest.config.js'));@(ProjectFiles)"
-			Outputs="$(WorkspaceRoot)coverage/$(ProjectName).cobertura.xml"
+			Outputs="$(WorkspaceRoot)TestResults/$(ProjectName).cobertura.xml"
 	>
 		<!-- Add output similar to .NET VSTest -->
 		<Message Text="Run tests: '$(ProjectRoot)' [vitest]" Importance="high" />

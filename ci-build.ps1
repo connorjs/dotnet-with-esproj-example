@@ -14,20 +14,20 @@ function Write-Color($color) {
 }
 
 # Clean coverage directory
-Remove-Item -Recurse -Force coverage -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force TestResults -ErrorAction SilentlyContinue
 
 # Run the build
 dotnet restore --verbosity $verbosity
 dotnet build --verbosity $verbosity --configuration Release --no-restore
 dotnet test --verbosity $verbosity --configuration Release --no-build
-Get-ChildItem coverage -Filter *.cobertura.xml -Name | Foreach-Object {
+Get-ChildItem TestResults -Filter *.cobertura.xml -Name | Foreach-Object {
    $projectName = $_ -replace ".{14}$"
-	(Get-Content coverage/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content coverage/$_
+	(Get-Content TestResults/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content TestResults/$_
 }
-reportgenerator -reports:"coverage/*.cobertura.xml" -targetdir:coverage/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub" -verbosity:Warning
+reportgenerator -reports:"TestResults/*.cobertura.xml" -targetdir:TestResults/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub" -verbosity:Warning
 
 # Output coverage information
-$coverage = Get-Content -Raw coverage/report/Summary.json | ConvertFrom-Json
+$coverage = Get-Content -Raw TestResults/report/Summary.json | ConvertFrom-Json
 $coverage.coverage.assemblies | Format-Table @{ L = ' Project '; E = { "$($_.name)" }; A = 'center' }, @{ L = ' Line '; E = { "$($_.coverage.toString() )%" }; A = 'center' }, @{ L = ' Branch '; E = { "$( $_.branchcoverage )%" }; A = 'center' }, @{ L = ' Method '; E = { "$( $_.methodcoverage )%" }; A = 'center' }
 if ($coverage.summary.linecoverage -lt 80 -or $coverage.summary.branchcoverage -lt 80 -or $coverage.summary.methodcoverage -lt 80) {
 	Write-Color red "Coverage does not meet threshold.`n`nCI build failed."; Exit 1

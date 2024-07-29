@@ -14,7 +14,7 @@ export default defineConfig({
 			provider: `v8`,
 			// Coverage reporter
 			reporter: [[`cobertura`, { file: `${projectName}.cobertura.xml` }]],
-			reportsDirectory: `${workspaceRoot}/coverage`,
+			reportsDirectory: `${workspaceRoot}/TestResults`,
 			thresholds: {
 				branches: 80,
 				functions: 80,
