@@ -12,8 +12,8 @@ Remove-Item -Recurse -Force coverage -ErrorAction SilentlyContinue
 
 # Run the build
 dotnet restore
-dotnet build -c release --no-restore
-dotnet test -c release --no-build
+dotnet build --configuration Release --no-restore
+dotnet test --configuration Release --no-build
 reportgenerator -reports:"coverage/*.cobertura.xml" -targetdir:coverage/report -reporttypes:"Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub" -verbosity:Warning
 
 # Output coverage information

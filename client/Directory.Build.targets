@@ -1,19 +1,39 @@
 <Project TreatAsLocalProperty="StartTicks;FinishTicks;ElapsedTicks;Elapsed">
+	<!-- Default values (release builds) -->
+	<PropertyGroup>
+		<EslintArgs />
+		<PrettierArgs>--check</PrettierArgs>
+	</PropertyGroup>
 
-	<!-- Build: tsc -->
-	<Target Name="Tsc" AfterTargets="Build" Label="tsc">
-		<Message Text="Hello, tsc" Importance="high" />
+	<!-- Override values for debug builds (auto-fix) -->
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<EslintArgs>$(EslintArgs) --fix</EslintArgs>
+		<PrettierArgs>$(PrettierArgs) --write</PrettierArgs>
+	</PropertyGroup>
+
+	<!-- Build: eslint -->
+	<Target Name="Eslint" AfterTargets="Build">
+		<Message Text="Hello, eslint $(EslintArgs) $(_SolutionProjectConfiguration)" Importance="high" />
 	</Target>
 
-	<!-- Format: eslint -->
+	<!-- Build: prettier -->
+	<Target Name="Prettier" AfterTargets="Build">
+		<Message Text="Hello, prettier $(PrettierArgs)" Importance="high" />
+	</Target>
 
-	<!-- Format: prettier -->
+	<!-- Build: tsc -->
+	<Target Name="Tsc" AfterTargets="Build">
+		<Message Text="Hello, tsc" Importance="high" />
+	</Target>
 
 	<!-- Test: vitest -->
 
 	<!-- Restore: install -->
 	<!-- Hook into the JSPS restore before the standard NPMRestore -->
-	<Target Name="PnpmRestore" AfterTargets="NPMRestore" Label="Restore npm packages" Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json" Outputs="$(WorkspaceRoot)pnpm-lock.yaml">
+	<Target Name="PnpmRestore" AfterTargets="NPMRestore"
+			Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json"
+			Outputs="$(WorkspaceRoot)pnpm-lock.yaml"
+	>
 		<!-- Run pnpm install, timing it to match C# output -->
 		<PropertyGroup>
 			<StartTicks>$([System.DateTime]::UtcNow.Ticks)</StartTicks>
@@ -30,5 +50,4 @@
 		<!-- Print restore message the same way as csproj -->
 		<Message Text="Restored $(MSBuildProjectFullPath) (in $(Elapsed) ms)." Importance="high" />
 	</Target>
-
 </Project>

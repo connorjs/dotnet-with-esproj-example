@@ -7,9 +7,7 @@
 		<BaseIntermediateOutputPath>$(WorkspaceRoot)artifacts/obj/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
 
 		<!-- esproj still needs a target framework -->
-		<!-- This copies `Sdk.props` which has Windows-only condition. -->
-		<TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-		<TargetFrameworkMoniker>.NETFramework,Version=$(TargetFrameworkVersion)</TargetFrameworkMoniker>
+		<TargetFramework>net8.0</TargetFramework>
 	</PropertyGroup>
 
 	<!-- Customize npm build -->
