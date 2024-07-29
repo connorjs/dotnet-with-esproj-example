@@ -12,24 +12,42 @@
 
 	<!-- Build: eslint -->
 	<Target Name="eslint" AfterTargets="Build">
-		<Exec Command="pnpm exec eslint --format pretty $(ProjectRootRelative) $(EslintArgs)" WorkingDirectory="$(WorkspaceRoot)" />
+		<Exec
+			Command="pnpm exec eslint --format pretty . $(EslintArgs)"
+			StandardOutputImportance="normal"
+		/>
 	</Target>
 
 	<!-- Build: prettier -->
 	<Target Name="prettier" AfterTargets="Build">
-		<Exec Command="pnpm exec prettier $(ProjectRootRelative) $(PrettierArgs)" StandardOutputImportance="Normal" WorkingDirectory="$(WorkspaceRoot)" />
+		<Exec
+			Command="pnpm exec prettier . $(PrettierArgs)"
+			StandardOutputImportance="normal"
+		/>
 	</Target>
 
 	<!-- Build: tsc -->
 	<Target Name="tsc" AfterTargets="Build">
-		<Exec Command="pnpm exec tsc --build $(ProjectRootRelative)" WorkingDirectory="$(WorkspaceRoot)" />
+		<Exec
+			Command="pnpm exec tsc --build"
+			StandardOutputImportance="normal"
+		/>
 		<!-- Print from tsc, similar to C# compile, for CLI consistency -->
 		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
 	</Target>
 
 	<!-- Test: vitest -->
-	<Target Name="vitest" AfterTargets="VSTest">
-		<Message Text="VITEST" Importance="high" />
+	<Target Name="vitest" AfterTargets="VSTest"
+			Inputs="$([MSBuild]::GetPathOfFileAbove('vitest.config.js'));@(ProjectFiles)"
+			Outputs="$(WorkspaceRoot)coverage/$(ProjectName).cobertura.xml"
+	>
+		<!-- Add output similar to .NET VSTest -->
+		<Message Text="Run tests: '$(ProjectRoot)' [vitest]" Importance="high" />
+		<Exec
+			Command="pnpm exec vitest run --coverage"
+			StandardOutputImportance="normal"
+		/>
+		<Message Text="Tests succeeded: '$(ProjectRoot)' [vitest]" Importance="high" />
 	</Target>
 
 	<!-- Restore: install -->

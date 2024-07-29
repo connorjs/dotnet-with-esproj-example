@@ -2,22 +2,17 @@ import path from "node:path";
 
 import { defineConfig } from "vitest/config";
 
-const vitestConfigRoot = import.meta.dirname;
-const workspaceRoot = path.resolve(vitestConfigRoot, `..`);
-
+const workspaceRoot = path.resolve(import.meta.dirname, `..`);
 const projectRoot = process.cwd();
 const projectName = path.basename(projectRoot);
 
-console.error({ vitestConfigRoot, workspaceRoot, projectRoot, projectName });
-
 export default defineConfig({
-	// server: { fs: { allow: [vitestFactoryRoot] } },
 	test: {
 		coverage: {
 			all: true,
 			clean: false, // Workspace-wide coverage directory; do not clean
-			include: [projectRoot],
 			provider: `v8`,
+			// Coverage reporter
 			reporter: [[`cobertura`, { file: `${projectName}.cobertura.xml` }]],
 			reportsDirectory: `${workspaceRoot}/coverage`,
 			thresholds: {
@@ -27,7 +22,8 @@ export default defineConfig({
 				perFile: true,
 			},
 		},
-		reporters: [`dot`], // Unit test reporter (not coverage)
+		// Unit test reporter (not coverage)
+		reporters: process.env.GITHUB_ACTIONS ? ["dot", "github-actions"] : ["dot"],
 		restoreMocks: true,
 	},
 });

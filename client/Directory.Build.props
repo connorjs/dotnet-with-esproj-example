@@ -15,4 +15,11 @@
 		<!-- Skip npm install because we are using pnpm; see Directory.Build.targets -->
 		<ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Include workspace-wide files when defining npm project files (used for MSBuild-driven incremental builds) -->
+		<ProjectFiles Include="$(ProjectRoot)/**/*" />
+		<Projectfiles Include="$(WorkspaceRoot)/package.json;$(WorkspaceRoot)/pnpm-lock.yaml;$(WorkspaceRoot)/pnpm-workspace.yaml" />
+		<ProjectFiles Include="$(MSBuildThisFileDirectory)*" />
+	</ItemGroup>
 </Project>
