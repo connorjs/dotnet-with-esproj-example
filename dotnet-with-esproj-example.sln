@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{B459F9
 		client\Directory.Build.props = client\Directory.Build.props
 		client\Directory.Build.targets = client\Directory.Build.targets
 		package.json = package.json
+		pnpm-lock.yaml = pnpm-lock.yaml
 		pnpm-workspace.yaml = pnpm-workspace.yaml
 	EndProjectSection
 EndProject

@@ -1,36 +1,35 @@
 <Project TreatAsLocalProperty="StartTicks;FinishTicks;ElapsedTicks;Elapsed">
-	<!-- Default values (release builds) -->
+	<!-- Release build command arguments (verify, used in CI) -->
 	<PropertyGroup>
-		<EslintArgs />
 		<PrettierArgs>--check</PrettierArgs>
 	</PropertyGroup>
 
-	<!-- Override values for debug builds (auto-fix) -->
-	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+	<!-- Debug build command arguments (auto-fix, used in local dev) -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 		<EslintArgs>$(EslintArgs) --fix</EslintArgs>
 		<PrettierArgs>$(PrettierArgs) --write</PrettierArgs>
 	</PropertyGroup>
 
 	<!-- Build: eslint -->
-	<Target Name="Eslint" AfterTargets="Build">
-		<Message Text="Hello, eslint $(EslintArgs) $(_SolutionProjectConfiguration)" Importance="high" />
+	<Target Name="eslint" AfterTargets="Build">
+		<Message Text="Hello, eslint $(EslintArgs)" Importance="high" />
 	</Target>
 
 	<!-- Build: prettier -->
-	<Target Name="Prettier" AfterTargets="Build">
-		<Message Text="Hello, prettier $(PrettierArgs)" Importance="high" />
+	<Target Name="prettier" AfterTargets="Build">
+		<Exec Command="pnpm exec prettier $(ProjectRootRelative) $(PrettierArgs)" WorkingDirectory="$(WorkspaceRoot)" />
 	</Target>
 
 	<!-- Build: tsc -->
-	<Target Name="Tsc" AfterTargets="Build">
-		<Message Text="Hello, tsc" Importance="high" />
+	<Target Name="tsc" BeforeTargets="Build">
+		<Exec Command="pnpm exec tsc --build $(ProjectRootRelative)" WorkingDirectory="$(WorkspaceRoot)" />
 	</Target>
 
 	<!-- Test: vitest -->
 
 	<!-- Restore: install -->
 	<!-- Hook into the JSPS restore before the standard NPMRestore -->
-	<Target Name="PnpmRestore" AfterTargets="NPMRestore"
+	<Target Name="pnpm install" AfterTargets="NPMRestore"
 			Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json"
 			Outputs="$(WorkspaceRoot)pnpm-lock.yaml"
 	>

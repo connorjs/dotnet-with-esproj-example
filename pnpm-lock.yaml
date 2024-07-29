@@ -11,6 +11,9 @@ importers:
       '@connorjs/tsconfig':
         specifier: ~0.2.0
         version: 0.2.0(typescript@5.5.4)
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -27,6 +30,11 @@ packages:
       typescript:
         optional: true
 
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
@@ -37,5 +45,7 @@ snapshots:
   '@connorjs/tsconfig@0.2.0(typescript@5.5.4)':
     optionalDependencies:
       typescript: 5.5.4
+
+  prettier@3.3.3: {}
 
   typescript@5.5.4: {}
