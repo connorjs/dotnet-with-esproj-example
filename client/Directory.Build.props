@@ -8,9 +8,6 @@
 
 		<!-- esproj still needs a target framework -->
 		<TargetFramework>net8.0</TargetFramework>
-
-		<!-- Mark all projects as test projects so that `dotnet test` will run its tests -->
-		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
 
 	<!-- Customize npm build -->

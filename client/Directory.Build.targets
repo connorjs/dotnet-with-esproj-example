@@ -27,10 +27,10 @@
 		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
 	</Target>
 
-	<!--	&lt;!&ndash; Test: vitest &ndash;&gt;-->
-	<!--	<Target Name="vitest" AfterTargets="Test">-->
-	<!--		<Exec Command="echo hello" />-->
-	<!--	</Target>-->
+	<!-- Test: vitest -->
+	<Target Name="vitest" AfterTargets="VSTest">
+		<Message Text="VITEST" Importance="high" />
+	</Target>
 
 	<!-- Restore: install -->
 	<!-- Hook into the JSPS restore before the standard NPMRestore -->
