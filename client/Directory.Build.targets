@@ -19,7 +19,7 @@
 			StandardOutputImportance="normal"
 		/>
 		<!-- Print from tsc, similar to C# compile, for CLI consistency -->
-		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
+		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/$(ProjectName)/tsc" Importance="high" />
 	</Target>
 
 	<!-- Build: eslint -->
@@ -33,7 +33,7 @@
 	<!-- Build: prettier -->
 	<Target Name="prettier" AfterTargets="Build">
 		<Exec
-			Command="pnpm exec prettier --ignore-unknown --cache-location $(WorkspaceRoot)artifacts/prettier $(PrettierArgs) ."
+			Command="pnpm exec prettier --ignore-unknown --cache --cache-location $(ProjectArtifacts)/prettier/cache.json $(PrettierArgs) ."
 			StandardOutputImportance="normal"
 		/>
 	</Target>
@@ -41,7 +41,7 @@
 	<!-- Test: vitest -->
 	<Target Name="vitest" AfterTargets="VSTest"
 			Inputs="$([MSBuild]::GetPathOfFileAbove('vitest.config.ts'));@(ProjectFiles)"
-			Outputs="$(WorkspaceRoot)artifacts/test-results/$(ProjectName).cobertura.xml"
+			Outputs="$(WorkspaceRoot)artifacts/$(ProjectName)/test-results"
 	>
 		<!-- Add output similar to .NET VSTest -->
 		<Message Text="Run tests: '$(ProjectRoot)' [vitest]" Importance="high" />
