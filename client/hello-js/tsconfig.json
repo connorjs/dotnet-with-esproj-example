@@ -3,5 +3,5 @@
 		"baseUrl": ".",
 		"outDir": "../../artifacts/tsc/hello-js"
 	},
-	"extends": "@connorjs/tsconfig/base/tsconfig.json"
+	"extends": "../tsconfig.json"
 }

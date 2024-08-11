@@ -6,14 +6,14 @@
 
 	<!-- Debug build command arguments (auto-fix, used in local dev) -->
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-		<EslintArgs>$(EslintArgs) --fix</EslintArgs>
-		<PrettierArgs>$(PrettierArgs) --write</PrettierArgs>
+		<EslintArgs>--fix</EslintArgs>
+		<PrettierArgs>--list-different --write</PrettierArgs>
 	</PropertyGroup>
 
 	<!-- Build: eslint -->
 	<Target Name="eslint" AfterTargets="Build">
 		<Exec
-			Command="pnpm exec eslint --format pretty . $(EslintArgs)"
+			Command="pnpm exec eslint --format pretty $(EslintArgs) ."
 			StandardOutputImportance="normal"
 		/>
 	</Target>
@@ -21,7 +21,7 @@
 	<!-- Build: prettier -->
 	<Target Name="prettier" AfterTargets="Build">
 		<Exec
-			Command="pnpm exec prettier . $(PrettierArgs)"
+			Command="pnpm exec prettier --ignore-unknown $(PrettierArgs) ."
 			StandardOutputImportance="normal"
 		/>
 	</Target>
@@ -38,8 +38,8 @@
 
 	<!-- Test: vitest -->
 	<Target Name="vitest" AfterTargets="VSTest"
-			Inputs="$([MSBuild]::GetPathOfFileAbove('vitest.config.js'));@(ProjectFiles)"
-			Outputs="$(WorkspaceRoot)TestResults/$(ProjectName).cobertura.xml"
+			Inputs="$([MSBuild]::GetPathOfFileAbove('vitest.config.ts'));@(ProjectFiles)"
+			Outputs="$(WorkspaceRoot)artifacts/test-results/$(ProjectName).cobertura.xml"
 	>
 		<!-- Add output similar to .NET VSTest -->
 		<Message Text="Run tests: '$(ProjectRoot)' [vitest]" Importance="high" />

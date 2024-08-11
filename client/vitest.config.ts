@@ -3,10 +3,12 @@ import path from "node:path";
 import { defineConfig } from "vitest/config";
 
 const workspaceRoot = path.resolve(import.meta.dirname, `..`);
+const artifactsRoot = path.join(workspaceRoot, `artifacts`);
 const projectRoot = process.cwd();
 const projectName = path.basename(projectRoot);
 
 export default defineConfig({
+	cacheDir: path.join(artifactsRoot, `vite`, projectName),
 	test: {
 		coverage: {
 			all: true,
@@ -14,7 +16,7 @@ export default defineConfig({
 			provider: `v8`,
 			// Coverage reporter
 			reporter: [[`cobertura`, { file: `${projectName}.cobertura.xml` }]],
-			reportsDirectory: `${workspaceRoot}/TestResults`,
+			reportsDirectory: path.join(artifactsRoot, `test-results`),
 			thresholds: {
 				branches: 80,
 				functions: 80,
@@ -23,7 +25,9 @@ export default defineConfig({
 			},
 		},
 		// Unit test reporter (not coverage)
-		reporters: process.env.GITHUB_ACTIONS ? ["dot", "github-actions"] : ["dot"],
+		reporters: process.env[`GITHUB_ACTIONS`]
+			? [`dot`, `github-actions`]
+			: [`dot`],
 		restoreMocks: true,
 	},
 });
