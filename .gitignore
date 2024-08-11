@@ -1,12 +1,7 @@
 ## Solution ##
 
-# Build
 artifacts/
-dist/
 node_modules/
-
-# Test
-TestResults/
 
 ## IDE ##
 

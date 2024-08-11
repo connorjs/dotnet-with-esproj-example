@@ -17,7 +17,7 @@
 
 	<PropertyGroup Condition="$(IsTestProject)">
 		<!-- Coverage arguments -->
-		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(WorkspaceRoot)coverage.runsettings --results-directory $(WorkspaceRoot)TestResults</TestingPlatformCommandLineArguments>
+		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(WorkspaceRoot)coverage.runsettings --results-directory $(WorkspaceRoot)artifacts/test-results</TestingPlatformCommandLineArguments>
 	</PropertyGroup>
 
 	<ItemGroup Condition="$(IsTestProject)">

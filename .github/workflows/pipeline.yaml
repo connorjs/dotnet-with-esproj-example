@@ -25,20 +25,12 @@ jobs:
 
       - name: Use pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
           cache: 'pnpm'
-
-      - name: Use Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: temurin
-          java-version: 21
 
       - name: Install SonarQube scanner
         run: dotnet tool install --global dotnet-sonarscanner
@@ -50,7 +42,7 @@ jobs:
           -d:sonar.host.url='https://sonarcloud.io'
           -d:sonar.test.inclusions='**/*-test/**/*.cs,**/*.test.ts'
           -d:sonar.exclusions='**/*.json,**/*.props'
-          -d:sonar.coverageReportPaths='TestResults/report/SonarQube.xml'
+          -d:sonar.coverageReportPaths='artifacts/test-results/report/SonarQube.xml'
           -k:connorjs_dotnet-with-esproj-example -o:connorjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
@@ -69,22 +61,22 @@ jobs:
       - name: Fix JS package names
         shell: pwsh
         run: |
-          Get-ChildItem TestResults -Filter *.cobertura.xml -Name | Foreach-Object {
+          Get-ChildItem artifacts/test-results -Filter *.cobertura.xml -Name | Foreach-Object {
             $projectName = $_ -replace ".{14}$"
-            (Get-Content TestResults/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content TestResults/$_
+            (Get-Content artifacts/test-results/$_).replace("package name=`"main`"", "package name=`"${projectName}`"") | Set-Content artifacts/test-results/$_
           }
 
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.3.8
         with:
-          reports: TestResults/*.cobertura.xml
-          targetdir: TestResults/report
+          reports: artifacts/test-results/*.cobertura.xml
+          targetdir: artifacts/test-results/report
           reporttypes: Cobertura;HtmlInline;JsonSummary;MarkdownSummaryGithub;SonarQube
 
       - name: Check coverage thresholds
         shell: pwsh
         run: |
-          $coverage = Get-Content -Raw TestResults/report/Summary.json | ConvertFrom-Json
+          $coverage = Get-Content -Raw artifacts/test-results/report/Summary.json | ConvertFrom-Json
           if ($coverage.summary.linecoverage -lt 80 -or $coverage.summary.branchcoverage -lt 80 -or $coverage.summary.methodcoverage -lt 80) {
             Write-Error "Coverage does not meet threshold.`n`nCI build failed."; Exit 1
           }
@@ -99,7 +91,7 @@ jobs:
 
       - name: Publish coverage in build summary
         if: always() # Still publish coverage if tests failed
-        run: cat TestResults/report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+        run: cat artifacts/test-results/report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
 
       - name: Upload coverage report to Codecov
         if: always() # Still upload to CodeCov if tests failed
@@ -107,7 +99,7 @@ jobs:
         with:
           disable_search: true
           fail_ci_if_error: true
-          files: TestResults/*.cobertura.xml
+          files: artifacts/test-results/*.cobertura.xml
           flags: unittests
           plugins: noop
           token: ${{ secrets.CODECOV_TOKEN }}
