@@ -10,6 +10,18 @@
 		<PrettierArgs>--list-different --write</PrettierArgs>
 	</PropertyGroup>
 
+	<!-- Build order: tsc, eslint, prettier, and then any project-specific -->
+
+	<!-- Build: tsc -->
+	<Target Name="tsc" AfterTargets="Build">
+		<Exec
+			Command="pnpm exec tsc --build"
+			StandardOutputImportance="normal"
+		/>
+		<!-- Print from tsc, similar to C# compile, for CLI consistency -->
+		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
+	</Target>
+
 	<!-- Build: eslint -->
 	<Target Name="eslint" AfterTargets="Build">
 		<Exec
@@ -21,19 +33,9 @@
 	<!-- Build: prettier -->
 	<Target Name="prettier" AfterTargets="Build">
 		<Exec
-			Command="pnpm exec prettier --ignore-unknown $(PrettierArgs) ."
+			Command="pnpm exec prettier --ignore-unknown --cache-location $(WorkspaceRoot)artifacts/prettier $(PrettierArgs) ."
 			StandardOutputImportance="normal"
 		/>
-	</Target>
-
-	<!-- Build: tsc -->
-	<Target Name="tsc" AfterTargets="Build">
-		<Exec
-			Command="pnpm exec tsc --build"
-			StandardOutputImportance="normal"
-		/>
-		<!-- Print from tsc, similar to C# compile, for CLI consistency -->
-		<Message Text="$(ProjectName) -> $(WorkspaceRoot)artifacts/tsc/$(ProjectName)" Importance="high" />
 	</Target>
 
 	<!-- Test: vitest -->
@@ -48,28 +50,5 @@
 			StandardOutputImportance="normal"
 		/>
 		<Message Text="Tests succeeded: '$(ProjectRoot)' [vitest]" Importance="high" />
-	</Target>
-
-	<!-- Restore: install -->
-	<!-- Hook into the JSPS restore before the standard NPMRestore -->
-	<Target Name="pnpm install" AfterTargets="NPMRestore"
-			Inputs="$(WorkspaceRoot)package.json;$(ProjectRoot)package.json"
-			Outputs="$(WorkspaceRoot)pnpm-lock.yaml"
-	>
-		<!-- Run pnpm install, timing it to match C# output -->
-		<PropertyGroup>
-			<StartTicks>$([System.DateTime]::UtcNow.Ticks)</StartTicks>
-		</PropertyGroup>
-
-		<Exec Command="pnpm -w install" StandardOutputImportance="normal" />
-
-		<PropertyGroup>
-			<FinishTicks>$([System.DateTime]::UtcNow.Ticks)</FinishTicks>
-			<ElapsedTicks>$([MSBuild]::Subtract($(FinishTicks), $(StartTicks)))</ElapsedTicks>
-			<Elapsed>$([System.TimeSpan]::FromTicks($(ElapsedTicks)).Milliseconds)</Elapsed>
-		</PropertyGroup>
-
-		<!-- Print restore message the same way as csproj -->
-		<Message Text="Restored $(MSBuildProjectFullPath) (in $(Elapsed) ms)." Importance="high" />
 	</Target>
 </Project>

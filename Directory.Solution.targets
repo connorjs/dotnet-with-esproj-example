@@ -1,0 +1,25 @@
+<Project>
+	<PropertyGroup>
+		<PnpmInstallCheck>$(SolutionDir)node_modules/.dotnet-pnpm-install</PnpmInstallCheck>
+	</PropertyGroup>
+
+	<!-- Install pnpm dependencies at solution/workspace level. -->
+	<Target Name="pnpm install" BeforeTargets="Restore"
+			Inputs="$(SolutionDir)package.json;$(SolutionDir)pnpm-lock.yaml;$(SolutionDir)pnpm-workspace.yaml"
+			Outputs="$(PnpmInstallCheck)"
+	>
+		<Exec Command="pnpm install --workspace-root" StandardOutputImportance="normal" />
+
+		<!-- Print restore message in similar way to csproj (no time though). -->
+		<Message Text="Restored $(SolutionDir)package.json (pnpm install)." Importance="high" />
+
+		<!-- File used for .NET iterative builds (touch updates the timestamp). -->
+		<Touch Files="$(PnpmInstallCheck)" AlwaysCreate="true" />
+	</Target>
+
+	<!-- Clean -->
+	<Target Name="Clean solution" AfterTargets="Clean">
+		<RemoveDir Directories="$(SolutionDir)artifacts" />
+		<RemoveDir Directories="$(PnpmInstallCheck)" />
+	</Target>
+</Project>

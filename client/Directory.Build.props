@@ -12,7 +12,7 @@
 
 	<!-- Customize npm build -->
 	<PropertyGroup>
-		<!-- Skip npm install because we are using pnpm; see Directory.Build.targets -->
+		<!-- Skip npm install because we are using workspace; see Directory.Solution.targets -->
 		<ShouldRunNpmInstall>false</ShouldRunNpmInstall>
 	</PropertyGroup>
 
