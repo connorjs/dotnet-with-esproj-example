@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"baseUrl": ".",
-		"outDir": "../../artifacts/tsc/hello-js"
+		"outDir": "../../artifacts/hello-js/tsc"
 	},
 	"extends": "../tsconfig.json"
 }

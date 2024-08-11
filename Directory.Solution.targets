@@ -20,6 +20,6 @@
 	<!-- Clean -->
 	<Target Name="Clean solution" AfterTargets="Clean">
 		<RemoveDir Directories="$(SolutionDir)artifacts" />
-		<RemoveDir Directories="$(PnpmInstallCheck)" />
+		<Delete Files="$(PnpmInstallCheck)" />
 	</Target>
 </Project>

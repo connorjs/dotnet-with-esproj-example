@@ -6,7 +6,8 @@
 		<IsTestProject>$(MSBuildProjectName.EndsWith('test'))</IsTestProject>
 
 		<!-- Artifacts -->
-		<ArtifactsPath>$(WorkspaceRoot)artifacts</ArtifactsPath>
+		<BaseIntermediateOutputPath>$(ProjectArtifacts)obj/</BaseIntermediateOutputPath>
+		<BaseOutputPath>$(ProjectArtifacts)bin/</BaseOutputPath>
 
 		<!-- Framework properties -->
 		<TargetFramework>net8.0</TargetFramework>
@@ -17,7 +18,7 @@
 
 	<PropertyGroup Condition="$(IsTestProject)">
 		<!-- Coverage arguments -->
-		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(WorkspaceRoot)coverage.runsettings --results-directory $(WorkspaceRoot)artifacts/test-results</TestingPlatformCommandLineArguments>
+		<TestingPlatformCommandLineArguments>--coverage --coverage-output $(MSBuildProjectName).cobertura.xml --coverage-settings $(WorkspaceRoot)coverage.runsettings --results-directory $(ProjectArtifacts)test-results</TestingPlatformCommandLineArguments>
 	</PropertyGroup>
 
 	<ItemGroup Condition="$(IsTestProject)">

@@ -9,5 +9,6 @@
 		<ProjectRoot>$(MSBuildProjectDirectory)</ProjectRoot>
 		<ProjectRootRelative>$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory), $(MSBuildProjectDirectory)))</ProjectRootRelative>
 		<ProjectName>$(MSBuildProjectName)</ProjectName>
+		<ProjectArtifacts>$(WorkspaceRoot)artifacts/$(ProjectName)/</ProjectArtifacts>
 	</PropertyGroup>
 </Project>

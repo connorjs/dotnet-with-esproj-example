@@ -3,12 +3,12 @@ import path from "node:path";
 import { defineConfig } from "vitest/config";
 
 const workspaceRoot = path.resolve(import.meta.dirname, `..`);
-const artifactsRoot = path.join(workspaceRoot, `artifacts`);
 const projectRoot = process.cwd();
 const projectName = path.basename(projectRoot);
+const projectArtifacts = path.join(workspaceRoot, `artifacts`, projectName);
 
 export default defineConfig({
-	cacheDir: path.join(artifactsRoot, `vite`, projectName),
+	cacheDir: path.join(projectArtifacts, `vite`),
 	test: {
 		coverage: {
 			all: true,
@@ -16,7 +16,7 @@ export default defineConfig({
 			provider: `v8`,
 			// Coverage reporter
 			reporter: [[`cobertura`, { file: `${projectName}.cobertura.xml` }]],
-			reportsDirectory: path.join(artifactsRoot, `test-results`),
+			reportsDirectory: path.join(projectArtifacts, `test-results`),
 			thresholds: {
 				branches: 80,
 				functions: 80,
