@@ -32,12 +32,6 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
 
-      - name: Use Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: temurin
-          java-version: 21
-
       - name: Install SonarQube scanner
         run: dotnet tool install --global dotnet-sonarscanner
 
