@@ -33,10 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{161728
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		Workspace.props = Workspace.props
-		LICENSE = LICENSE
 		ci-build.ps1 = ci-build.ps1
+		Directory.Solution.targets = Directory.Solution.targets
+		LICENSE = LICENSE
 		.github\workflows\pipeline.yaml = .github\workflows\pipeline.yaml
+		Workspace.props = Workspace.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{2E75741F-092F-4C2C-A182-AAF9F38CEC58}"
